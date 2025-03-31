@@ -31,7 +31,7 @@ docker-compose --version
 docker-compose up -d
 ```
 
-After everything is downloaded, navigate to port 8000 on localhost and go through the process to installing WordPress.
+After everything is downloaded, navigate to port 8000 on localhost and go through the process to install WordPress.
 
 ## How to Full Reset Everything
 
