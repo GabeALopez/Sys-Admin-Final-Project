@@ -21,6 +21,8 @@ sudo chmod +x /usr/local/bin/docker-compose
 ```Bash
 docker-compose --version
 ```
+***WARNING: Make sure to change the db and WordPress default passwords set in the docker compose file***
+
 **How to Run Compose File**
 
 ***NOTE: Run this in the directory where the compose file is***
