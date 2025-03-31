@@ -1,0 +1,7 @@
+# Ignore Docker volumes
+/wp-content/uploads/
+/wp-content/cache/
+/wp-content/backups/
+
+# Ignore local environment configuration files
+.env
