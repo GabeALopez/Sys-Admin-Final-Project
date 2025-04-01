@@ -1,32 +1,64 @@
-version: '3.7'
+version: '3.8'
 
 services:
-  wordpress:
-    image: wordpress:latest
-    container_name: wordpress
-    ports:
-      - "8000:80"
-    environment:
-      WORDPRESS_DB_HOST: db:3306
-      WORDPRESS_DB_NAME: wordpress
-      WORDPRESS_DB_USER: exampleuser
-      WORDPRESS_DB_PASSWORD: examplepassword
-    volumes:
-      - ./wp-content:/var/www/html/wp-content
-    networks:
-      - wordpress_network
-
   db:
     image: mysql:5.7
-    container_name: db
+    container_name: wordpress-db
+    restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: examplepassword
+      MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: wordpress
-      MYSQL_USER: exampleuser
-      MYSQL_PASSWORD: examplepassword
+      MYSQL_USER: wp_user
+      MYSQL_PASSWORD: wp_pass
     networks:
-      - wordpress_network
+      - wordpress-net
+    volumes:
+      - db_data:/var/lib/mysql
+
+  wordpress1:
+    image: wordpress:latest
+    container_name: wordpress1
+    restart: always
+    depends_on:
+      - db
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wp_user
+      WORDPRESS_DB_PASSWORD: wp_pass
+      WORDPRESS_DB_NAME: wordpress
+    networks:
+      - wordpress-net
+
+  wordpress2:
+    image: wordpress:latest
+    container_name: wordpress2
+    restart: always
+    depends_on:
+      - db
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wp_user
+      WORDPRESS_DB_PASSWORD: wp_pass
+      WORDPRESS_DB_NAME: wordpress
+    networks:
+      - wordpress-net
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx-load-balancer
+    restart: always
+    depends_on:
+      - wordpress1
+      - wordpress2
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - wordpress-net
 
 networks:
-  wordpress_network:
-    driver: bridge
+  wordpress-net:
+
+volumes:
+  db_data:
