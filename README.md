@@ -28,7 +28,7 @@ docker-compose --version
 ***NOTE: Run this in the directory where the compose file is***
 
 ```Bash
-docker-compose up -d
+docker-compose up --scale wordpress=3 d
 ```
 
 After everything is downloaded, navigate to port 8000 on localhost and go through the process to install WordPress.
