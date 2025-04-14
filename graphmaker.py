@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 
 # Percentiles and corresponding response times (in milliseconds) from the image
 percentiles = [50, 66, 75, 80, 90, 95, 98, 99, 100]
-response_times = [390, 420, 498, 510, 620, 752, 924, 1001, 1267]
+response_times = [402, 462, 502, 528, 656, 867, 983, 1083, 1276]
 
 # Plotting the percentile graph
 plt.figure(figsize=(10, 6))
